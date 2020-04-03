@@ -41,7 +41,7 @@ def search_articles(articles, query):
         ]
     '''
 
-    for article in articles[:4]:
+    for article in articles[:10]:
         counter = 0
 
         while counter != 2:

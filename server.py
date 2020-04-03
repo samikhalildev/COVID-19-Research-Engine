@@ -3,7 +3,7 @@ from utils import cleanText, search_articles
 from flask_cors import CORS, cross_origin
 import json
 
-articles = json.load(open('./data/data_structure.json', 'rb'))
+articles = json.load(open('./data/articles.json', 'rb'))
 
 app = Flask(__name__)
 cors = CORS(app)
