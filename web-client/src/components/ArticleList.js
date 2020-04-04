@@ -14,6 +14,7 @@ class ArticleList extends Component {
             query: '',
             articles: '',
             loading: false,
+            title: 'COVID-19 Research Engine',
             searchable: ['Health', 'Treatment', 'Cure', 'Illness', 'Disease', 'SARS']
         };
     }
@@ -27,7 +28,6 @@ class ArticleList extends Component {
 
     onSearch = (e, f=false) => {
         let { query } = this.state;
-
         let value = '';
 
         if (f) {
@@ -94,12 +94,12 @@ class ArticleList extends Component {
     }
 
     render() {
-        let { loading, query, articles, searchable } = this.state;
+        let { loading, query, articles, searchable, title } = this.state;
         return (
             <div className="container">
                 <div className="row">
                     <div className="col m12">
-                        <h1 className="title center">COVID-19 Research Engine</h1>
+                        <h1 className="title center">{title}</h1>
                     </div>
                     <div className="col m2 m--25">
                         <div className="collection">

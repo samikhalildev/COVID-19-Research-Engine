@@ -47,9 +47,7 @@ class Article extends Component {
                         <div className="col s12 center m-25 offset-m2 l6 offset-l3">
                             <div className="card-panel grey lighten-5 z-depth-1">
                                 <span className="black-text">
-                                    <i> Authors: {' '}
-                                        {item.article.authors.map((author, i) => `${author.first} ${author.last} ${i != item.article.authors.length - 1 ? ', ' : ''}`)}
-                                    </i>
+                                    <i> Authors: {' '} {item.article.authors.join(', ')} </i>
                                 </span>
                             </div>
                         </div>
@@ -61,8 +59,9 @@ class Article extends Component {
                                 if (foundArticles.length > 0) {
                                     let sentences = t.text.split('. ');
                                     return <p>
-                                        {sentences.map((sentence, index) => {
-                                            return <span className={(foundArticles.filter(article => article.sentIndex == index)).length > 0 ? 'g-color' : ''}> {sentence + '. '}</span>
+                                        { sentences.map((sentence, index) => {
+                                            let lastCharIsSpace = sentence.substr(sentence.length - 1) == ' ';
+                                            return <span className={(foundArticles.filter(article => article.sentIndex == index)).length > 0 ? 'g-color' : ''}> {`${lastCharIsSpace ? sentence.substr(0, sentence.length - 1) : sentence}.`}</span>
                                         })}
                                     </p>
                                 }
@@ -87,8 +86,9 @@ class Article extends Component {
                                     let sentences = t.text.split('. ');
                                     
                                     html.push(<p>
-                                        {sentences.map((sentence, index) => {
-                                            return <span className={(foundArticles.filter(article => article.sentIndex == index)).length > 0 ? 'g-color' : ''}> {sentence + '. '}</span>
+                                        { sentences.map((sentence, index) => {
+                                            let lastCharIsSpace = sentence.substr(sentence.length - 1) == ' ';
+                                            return <span className={(foundArticles.filter(article => article.sentIndex == index)).length > 0 ? 'g-color' : ''}> {`${lastCharIsSpace ? sentence.substr(0, sentence.length - 1) : sentence}.`}</span>
                                         })}
                                     </p>)
                                 } else { 
