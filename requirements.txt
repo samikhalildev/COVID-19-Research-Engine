@@ -1,11 +1,6 @@
 Flask==1.1.1
 Flask-Cors==3.0.8
-jupyter==1.0.0
-jupyter-client==5.3.3
-jupyter-console==6.0.0
-jupyter-core==4.5.0
 nltk==3.4.5
-notebook==6.0.1
-numpy==1.17.2
-pandas==1.0.3
 rank-bm25==0.2
+gunicorn==20.0.4
+virtualenv==16.7.7

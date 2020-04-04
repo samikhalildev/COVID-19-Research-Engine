@@ -1,0 +1,14 @@
+.Python
+env/
+build/
+dist/
+lib/
+docs/_build/
+./node_modules
+venv/
+.env
+
+dev/
+__pycache__/
+*.py[cod]
+.vscode
