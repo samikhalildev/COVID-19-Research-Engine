@@ -12,10 +12,10 @@ class ArticleList extends Component {
         super();
         this.state = {
             query: '',
-            articles: '',
+            articles: [],
             loading: false,
-            title: 'COVID-19 Research Engine',
-            searchable: ['Health', 'Treatment', 'Cure', 'Illness', 'Disease', 'SARS']
+            title: 'Coronavirus Research Engine',
+            searchable: ['Health', 'Treatment', 'Cure', 'Illness', 'Disease', 'SARS', 'Drug discovery', 'Italy', 'China', 'Cough', 'Incubation']
         };
     }
 
@@ -43,11 +43,16 @@ class ArticleList extends Component {
     }
 
     getAPI = value => {
+        let backend = ''
+        if (window.location.hostname == 'localhost') {
+            backend = 'http://localhost:5000';
+        }
+
         axios
-            .get(`http://localhost:5000/search?query=${value}`)
+            .get(`${backend}/search?query=${value}`)
             .then(res => {
                 if (res.status == 200) {
-                    this.updateArticles(res.data);
+                    this.setState({ articles: res.data, loading: false });
                 }
             })
             .catch(err =>
@@ -55,7 +60,7 @@ class ArticleList extends Component {
             );
     }
 
-    updateArticles = articles => {
+    _updateArticles = articles => {
         let updated_list = {}
         console.log(articles);
 
@@ -88,25 +93,21 @@ class ArticleList extends Component {
         this.setState({ articles: updated_list, loading: false });
     }
 
-    resLength() {
-        let { articles } = this.state;
-        return Object.keys(articles).length;
-    }
-
     render() {
         let { loading, query, articles, searchable, title } = this.state;
+
         return (
             <div className="container">
                 <div className="row">
                     <div className="col m12">
                         <h1 className="title center">{title}</h1>
                     </div>
-                    <div className="col m2 m--25">
+                    <div className="col m2">
                         <div className="collection">
                             { searchable.map(value => <a href="#" onClick={() => this.onSearch(value, 'searchable')} className={`collection-item b-color ${value.toLowerCase() == query.toLowerCase() ? 'active' : ''}`}>{value}</a>)}
                         </div>
                     </div>
-                    <div className="col m10 m-15">
+                    <div className="col m10 m-5">
                         <div className="col s12">
                             <nav className="b-btn">
                                 <div className="nav-wrapper">
@@ -123,20 +124,20 @@ class ArticleList extends Component {
                         <div className="col s12">
                             { loading && !isEmpty(query) ? (
                                 <Loader/>
-                            ) : this.resLength() > 0 ? (
+                            ) : articles.length > 0 ? (
                                 <div className="m-35">
-                                    <h5 className="res-heading">{Object.keys(articles[Object.keys(articles)[0]]).length} {`Article${Object.keys(articles[Object.keys(articles)[0]]).length > 1 ? 's' : ''}`} found for "{query}"</h5>
+                                    <h5 className="res-heading">Articles found relating to {query}</h5>
                                     <Line/>
+                                    { articles.length > 0 ? <ArticleTable {...this.state} /> : null}
                                 </div>
                             ) : query ? <p> No articles found for "{query}"</p> : (
                                 <p className="info m-10 font-small">
-                                    Search using a keyword, the engine will return the most relevant results among 200k scholar articles.
+                                    Search using a keyword, the engine will return the most relevant results among 30k scholar articles.
                                 </p>
                             )}
                         </div>
                     </div>
                 </div>
-                {this.resLength() > 0 ? <ArticleTable {...this.state} /> : null}
             </div>
         )
     }

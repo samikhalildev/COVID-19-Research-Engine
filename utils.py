@@ -24,10 +24,6 @@ def getSentences(text):
 def lastElement(i, arr):
     return i == len(arr) - 1
 
-def cleanText(text):
-    text = text.strip().lower()
-    return text
-
 def search_articles(articles, query):
     searchIndex = {}
 

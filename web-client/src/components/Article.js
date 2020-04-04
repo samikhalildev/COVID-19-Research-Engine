@@ -7,17 +7,17 @@ class Article extends Component {
     constructor(){
         super();
         this.state = {
-            data: [],
-            keyword: ''
+            article: {},
+            query: ''
         };
     }
 
     componentDidMount () {
         const { id } = this.props.match.params
-        const { data, keyword } = this.props.location.state;
+        const { article, query } = this.props.location.state;
 
-        if (id && data && data.length > 0)
-            this.setState({ data, keyword });
+        if (id && article && Object.keys(article).length > 0)
+            this.setState({ article, query });
         else
             this.props.history.push('/')
     }
@@ -28,49 +28,44 @@ class Article extends Component {
     }
 
     render() {
-        let { data, keyword } = this.state;
-        let item = '';
+        let { article, query } = this.state;
         let previousSection = '';
-
-        if (data.length > 0)
-            item = data[0];
 
         return (
             <div className="container m-50 mb-75">
                 <div className="back-btn">
-                    <Link to={`/${keyword}`} className="btn-floating btn-large waves-effect waves-light b-btn"><i className="material-icons">keyboard_backspace</i></Link>
+                    <Link to={`/${query}`} className="btn-floating btn-large waves-effect waves-light b-btn"><i className="material-icons">keyboard_backspace</i></Link>
                 </div>
-
-                { data.length > 0 ? (
+                { Object.keys(article).length > 0 ? (
                     <>
-                        <h4 className="title">{item.article.title}</h4>
+                        <h4 className="title">{article.title}</h4>
                         <div className="col s12 center m-25 offset-m2 l6 offset-l3">
                             <div className="card-panel grey lighten-5 z-depth-1">
                                 <span className="black-text">
-                                    <i> Authors: {' '} {item.article.authors.join(', ')} </i>
+                                    { article.authors.length ? <i> Authors: {' '} {article.authors.join(', ')} </i> : null}
                                 </span>
                             </div>
                         </div>
                         <Line showRed={true} />
                         <div className="abstract m-50">
                             <h4>Abstract</h4>
-                            {item.article.abstract.map((t, i) => {
-                                let foundArticles = this.isSent(data, 'abstract', i, t.text)
-                                if (foundArticles.length > 0) {
-                                    let sentences = t.text.split('. ');
-                                    return <p>
-                                        { sentences.map((sentence, index) => {
-                                            let lastCharIsSpace = sentence.substr(sentence.length - 1) == ' ';
-                                            return <span className={(foundArticles.filter(article => article.sentIndex == index)).length > 0 ? 'g-color' : ''}> {`${lastCharIsSpace ? sentence.substr(0, sentence.length - 1) : sentence}.`}</span>
-                                        })}
-                                    </p>
-                                }
+                            {article.abstract.map((t, i) => {
+                                //let foundArticles = this.isSent(data, 'abstract', i, t.text)
+                                // if (foundArticles.length > 0) {
+                                //     let sentences = t.text.split('. ');
+                                //     return <p>
+                                //         { sentences.map((sentence, index) => {
+                                //             let lastCharIsSpace = sentence.substr(sentence.length - 1) == ' ';
+                                //             return <span className={(foundArticles.filter(article => article.sentIndex == index)).length > 0 ? 'g-color' : ''}> {`${lastCharIsSpace ? sentence.substr(0, sentence.length - 1) : sentence}.`}</span>
+                                //         })}
+                                //     </p>
+                                // }
                                 return <p>{t.text}</p>
                             })}
                         </div> 
 
                         <article className="m-50">
-                            {item.article.body.map((t, i) => {
+                            {article.body.map((t, i) => {
                                 let html = [];
 
                                 let {section} = t;
@@ -80,20 +75,21 @@ class Article extends Component {
                                     html.push(<h5 className="section">{section}</h5>)
                                 }
 
-                                let foundArticles = this.isSent(data, 'body', i, t.text)
-                                if (foundArticles.length > 0) {
+                                // let foundArticles = this.isSent(data, 'body', i, t.text)
+                                // if (foundArticles.length > 0) {
                                     
-                                    let sentences = t.text.split('. ');
+                                //     let sentences = t.text.split('. ');
                                     
-                                    html.push(<p>
-                                        { sentences.map((sentence, index) => {
-                                            let lastCharIsSpace = sentence.substr(sentence.length - 1) == ' ';
-                                            return <span className={(foundArticles.filter(article => article.sentIndex == index)).length > 0 ? 'g-color' : ''}> {`${lastCharIsSpace ? sentence.substr(0, sentence.length - 1) : sentence}.`}</span>
-                                        })}
-                                    </p>)
-                                } else { 
-                                    html.push(<p>{t.text}</p>)
-                                }
+                                //     html.push(<p>
+                                //         { sentences.map((sentence, index) => {
+                                //             let lastCharIsSpace = sentence.substr(sentence.length - 1) == ' ';
+                                //             return <span className={(foundArticles.filter(article => article.sentIndex == index)).length > 0 ? 'g-color' : ''}> {`${lastCharIsSpace ? sentence.substr(0, sentence.length - 1) : sentence}.`}</span>
+                                //         })}
+                                //     </p>)
+                                // } else { 
+                                // }
+
+                                html.push(<p>{t.text}</p>)
                                 
                                 return html
                             })}
@@ -104,6 +100,9 @@ class Article extends Component {
                         <div className="indeterminate"></div>
                     </div>
                 )}
+                <div className="m-50 center">
+                    <Link to={`/${query}`} className="btn-floating btn-large waves-effect waves-light b-btn"><i className="material-icons">keyboard_backspace</i></Link>
+                </div>
             </div>
         )
     }
@@ -115,4 +114,4 @@ export default Article;
 
 //let startIndex = foundArticles.map(article => t.text.indexOf(article.sentence))
 //let endIndex = startIndex + foundArticles.sentence.length;
-//t.text = t.text.substring(t.text.indexOf(sentences[item.sentIndex-2]), sentences[t.sentIndex])
+//t.text = t.text.substring(t.text.indexOf(sentences[sentIndex-2]), sentences[t.sentIndex])

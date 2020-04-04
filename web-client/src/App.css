@@ -156,6 +156,23 @@ td {
   background-color: #4fbdf1;
 }
 
+.open_icon { 
+  font-size: 35px !important;
+}
+.light-bg {
+  background-color: whitesmoke;
+}
+
+.article-item {
+  padding: 20px;
+}
+
+.article-title {
+  font-size: 20px;
+  color: #005182;
+  font-weight: bold;
+}
+
 .m--25 {
   margin-top: -25px;
 }
