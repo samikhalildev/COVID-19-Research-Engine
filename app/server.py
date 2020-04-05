@@ -1,5 +1,6 @@
-from flask import Flask,request,jsonify,render_template, Blueprint
+from flask import Flask, request, jsonify, render_template, Blueprint, redirect, url_for
 from flask_cors import CORS, cross_origin
+from urllib.parse import urlparse
 from app.search import cleanText, buildIndex, searchArticles
 import json
 
@@ -25,7 +26,14 @@ def createApp():
 @index_view.route('/', defaults={'u_path': ''})
 @index_view.route('/<path:u_path>')
 def index(u_path):
-    return render_template('index.html')
+    url = urlparse(request.base_url)
+    host = url.hostname
+    print(host)
+
+    if host == 'coronavirus-research.herokuapp.com':
+        return redirect("https://c-ovid-19.technology/", code=302)
+    else:
+        return render_template('index.html')
 
 @search_api.route('/search', methods=['GET'])
 def search():

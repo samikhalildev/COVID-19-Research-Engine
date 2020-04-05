@@ -24,31 +24,23 @@ def getSentences(text):
 def lastElement(i, arr):
     return i == len(arr) - 1
 
-def search_articles(articles, query):
+def old_search_function(articles, query):
     searchIndex = {}
-
-    ''' an array of objects
-    Structure = [
-            'paper_id',
-            'title',
-            'authors',
-            'abstract',
-            'body'
-        ]
-    '''
-
-    for article in articles[:10]:
+    
+    for article in articles[:5]:
         counter = 0
 
         while counter != 2:
             sectionType = 'abstract' if counter == 0 else 'body'
+            
             for i in range(len(article[sectionType])):
                 paragraph = article[sectionType][i]
 
-                section = paragraph['section']
                 text = paragraph['text']
+                section = paragraph['section']
                 
                 sentences = text.split('. ')
+                
                 for j in range(len(sentences)):
                     sentence = sentences[j]
                     for term in query:
@@ -59,5 +51,19 @@ def search_articles(articles, query):
                             else:
                                 searchIndex[term] = [ob]
             counter += 1
-                        
-    return searchIndex
+            
+    return searchIndex            
+
+# query = ['Heath', 'Treatment', 'Cure', 'Virus']
+# searchIndex = old_search_function(articles, query)
+# if len(data):
+#     for key in searchIndex.keys():
+#         dic = {}
+#         for item in searchIndex[key][:1]:
+#             print(key)
+#             print(item['article']['title'])
+#             if key in item['article']['title'].lower():
+#                 print('wo')
+
+# with open('tokenized_corpus_30k.json', 'w', encoding='utf-8') as f:
+#     json.dump(tokenized_corpus, f, ensure_ascii=False, indent=4)

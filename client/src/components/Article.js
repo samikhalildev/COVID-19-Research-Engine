@@ -13,10 +13,9 @@ class Article extends Component {
     }
 
     componentDidMount () {
-        const { id } = this.props.match.params
         const { article, query } = this.props.location.state;
 
-        if (id && article && Object.keys(article).length > 0)
+        if (article && Object.keys(article).length > 0)
             this.setState({ article, query });
         else
             this.props.history.push('/')
