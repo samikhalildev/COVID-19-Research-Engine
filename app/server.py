@@ -4,7 +4,7 @@ from urllib.parse import urlparse
 from app.search import cleanText, buildIndex, searchArticles
 import json
 
-size = '2k'
+size = '1k'
 articles = json.load(open(f'./data/articles_{size}.json', 'rb'))
 tokenized_corpus = json.load(open(f'./data/tokenized_corpus_{size}.json', 'rb'))
 
