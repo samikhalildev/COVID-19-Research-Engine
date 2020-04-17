@@ -21,7 +21,7 @@ class Search extends Component {
             loading: true,
             intervalId: 0,
             title: 'Coronavirus Research Engine',
-            searchable: ['Health', 'Treatment', 'Cure', 'Illness', 'Disease', 'SARS', 'Drug discovery', 'Italy', 'China', 'Cough', 'Incubation']
+            searchable: ['Health', 'Treatment', 'Cure', 'SARS', 'Drug discovery', 'Incubation period', 'Environmental stability', 'Clinical processes', 'Influenza', 'Immune response and immunity', 'Co-infections', 'Proteomic Analysis', 'Neonates', 'Parainfluenzae', 'Socio-economic and behavioral factors', 'Virus serial interval', 'Fatality among hospitalized patients', 'Susceptibility of populations', 'Virus genetics', 'Genetic sequencing', 'Discovery and development', 'Wuhan Viral Pneumonia']
         };
     }
 
