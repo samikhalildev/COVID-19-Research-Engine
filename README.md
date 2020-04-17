@@ -18,4 +18,4 @@ BM250kapi was used to build an index/corpus of the data as well as nltk features
 2. Run Flask server
     ```python3 run.py```
 3. View in browser on: http://127.0.0.1:5000/
-Note: Flask will also serve the front-end
+- Note: Flask will also serve the front-end
