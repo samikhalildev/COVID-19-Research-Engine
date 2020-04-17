@@ -82,8 +82,7 @@ class ArticleItem extends Component {
 
     render() {
         let { article, query } = this.state;
-
-        console.log(article)
+        let previousSection = '';
 
         return (
             <div className="container m-50 mb-75">
@@ -122,15 +121,18 @@ class ArticleItem extends Component {
                             {article.body.map((t, i) => {
 
                                 let { section, text } = t;
+                                let html = [];
+                                
+                                if (section.trim().length > 5 && i === 0 || previousSection != section) {
+                                    previousSection = section;
+                                    html.push(<h5 className="section">{section}</h5>)
+                                }
                                 
                                 if (this.wordsCount(text) > 10) {
-                                    return (
-                                        <>
-                                            <h5 className="section">{section}</h5>
-                                            <p>{text}</p>
-                                        </>
-                                    )
+                                    html.push(<p>{text}</p>)
                                 }
+
+                                return html
 
                                 // let foundArticles = this.isSent(data, 'body', i, t.text)
                                 // if (foundArticles.length > 0) {
