@@ -4,7 +4,7 @@ from urllib.parse import urlparse
 from app.search import cleanText, buildIndex, searchArticles
 import json
 
-size = '1k'
+size = '2k'
 articles = json.load(open(f'./data/articles_{size}.json', 'rb'))
 tokenized_corpus = json.load(open(f'./data/tokenized_corpus_{size}.json', 'rb'))
 
@@ -41,7 +41,5 @@ def search():
     query = cleanText(query)
     print(query)
 
-    n = 5
-
-    res = searchArticles(bm25_index, tokenized_corpus, articles, query, n)
+    res = searchArticles(bm25_index, tokenized_corpus, articles, query, 30)
     return jsonify(res)
