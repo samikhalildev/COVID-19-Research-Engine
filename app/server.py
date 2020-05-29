@@ -29,8 +29,8 @@ def index(u_path):
     url = urlparse(request.base_url)
     host = url.hostname
     print(host)
-    if host == 'c-ovid-19.technology':
-        return redirect("https://coronavirus-research.herokuapp.com", code=302)
+    if host == 'coronavirus-research.herokuapp.com':
+        return redirect("https://c-ovid-19.technology/", code=302)
     else:
         return render_template('index.html')
 
