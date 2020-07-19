@@ -7,7 +7,7 @@ import Spinner from './utils/Spinner';
 import Line from './utils/Line';
 import firstUpper from './utils/firstUpper';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import { Article } from '../interfaces/Article'
+import { Article } from '../classes/Article'
 
 interface Props {
     scrollStepInPx: number;
@@ -89,13 +89,14 @@ class Search extends Component<Props, State> {
             .then(res => {
                 if (res.status == 200) {
 
-                    let resultsLength: number = 5;
-                    let articles = res.data;
+                    let articles: Array<Article> = [];
+                    
+                    res.data.forEach((article: Article) => {
+                        let { paper_id, title, summary, authors, abstract, body } = article;
+                        articles.push(new Article(paper_id, title, summary, authors, abstract, body));
+                    });
 
-                    if (articles.length < 5)
-                        resultsLength = articles.length
-
-                    this.setState({ articles, resultsLength, loading: false });
+                    this.setState({ articles, loading: false, resultsLength: articles.length < 5 ? articles.length : this.state.resultsLength });
                 }
             })
             .catch(err => {

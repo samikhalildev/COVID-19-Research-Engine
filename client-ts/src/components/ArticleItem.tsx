@@ -1,7 +1,8 @@
 import React, {Component} from 'react'
 import { Link, RouteComponentProps } from 'react-router-dom';
 import Line from './utils/Line';
-import { Article, Text } from '../interfaces/Article'
+import { Text } from '../interfaces/Text'
+import { Article } from '../classes/Article'
 
 interface State {
     article: Article;
@@ -38,22 +39,6 @@ class ArticleItem extends Component<Props, State> {
         this.setState({ intervalId: intervalId });
     }
 
-    isKeywordInText = (text: string, keyword: string) => {
-        let i = -1;
-        let arr = [];
-        keyword = keyword.toLowerCase()
-
-        while((i=text.indexOf(keyword,i+1)) >= 0) {
-            arr.push(i)
-        }
-
-        return arr;
-    }
-
-    wordsCount = (text: string) => {
-        return text.trim().length > 0 ? text.trim().split(' ').length : 0
-    }
-
     render() {
         let { article, query } = this.state;
         let previousSection = '';
@@ -65,11 +50,11 @@ class ArticleItem extends Component<Props, State> {
                 </div>
                 { Object.keys(article).length > 0 ? (
                     <>
-                        <h4 className="title">{article.title}</h4>
+                        <h4 className="title">{article.getTitle()}</h4>
                         <div className="col s12 center m-25 offset-m2 l6 offset-l3">
                             <div className="card-panel grey lighten-5 z-depth-1">
                                 <span className="black-text">
-                                    { article.authors.length ? <i> Authors: {' '} {article.authors.join(', ')} </i> : null}
+                                    <i> {article.getAuthors()} </i>
                                 </span>
                             </div>
                         </div>
@@ -82,7 +67,7 @@ class ArticleItem extends Component<Props, State> {
                             </div>
                         ): null }
                         
-                        { article.abstract.length && article.abstract[0].text && this.wordsCount(article.abstract[0].text) > 10 ? (
+                        { article.abstract.length && article.abstract[0].text && article.wordsCount(article.abstract[0].text) > 10 ? (
                             <div className="abstract m-50">
                                 <h4>Abstract</h4>
                                 {article.abstract.map((t: Text) => {
@@ -102,7 +87,7 @@ class ArticleItem extends Component<Props, State> {
                                     html.push(<h5 className="section">{section}</h5>)
                                 }
                                 
-                                if (this.wordsCount(text) > 10) {
+                                if (article.wordsCount(text) > 10) {
                                     html.push(<p>{text}</p>)
                                 }
 
