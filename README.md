@@ -8,7 +8,7 @@ The application is hosted using Flask web server and React as a front-end framew
 
 The index and summary of all articles are cached in seperate JSON files to help return the most relevant results quickly.
 
-Live demo: https://c-ovid-19.technology
+Live demo: https://coronavirus-research.herokuapp.com/
 
 BM250kapi was used to build an index/corpus of the data as well as nltk features to clean the data, remove stop words, tokenize and calculate sentences score to produce a summary from the article.
 
